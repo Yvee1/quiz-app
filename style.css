@@ -17,6 +17,7 @@ main {
   font-family: 'M PLUS 1p', sans-serif;
 
   color: #373F51;
+  position: relative;
 }
 
 h1 {
@@ -62,7 +63,31 @@ button {
   background-color: tomato;
 }
 
+.number-correct {
+  color: green;
+  font-size: 21px;
+  margin-top: 20px;
+  position: absolute;
+  right: 120px;
+  bottom: 40px;
+}
 
+.number-wrong {
+  margin-top: 20px;
+  margin-left: 10px;
+  color: red;
+  font-size: 21px;
+  right: 60px;
+  bottom: 40px;
+  position: absolute;
+}
+
+.current-question {
+  position: absolute;
+  left: 60px;
+  bottom: 40px;
+  font-size: 21px;
+}
 
 .centered-wrapper {
     position: relative;

@@ -37,12 +37,14 @@ button {
   padding: 30px;
   display: table;
   margin-left: 100px;
+  margin-right: 100px;
   margin-top: 30px;
 }
 
-.start-screen button {
+.js-start-button {
   margin-top: 100px;
   margin-left: 0px;
+  margin-right: 0px;
   padding: 40px;
   font-size: 42px;
   font-family: 'Overpass', sans-serif;

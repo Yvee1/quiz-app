@@ -2,9 +2,9 @@ let state = {
   questions: [{
     question: "What is an array?",
     correct: "A collection of objects stored in linear order accessible by a integer index.",
-    answer1: "A well defined computational procedure that takes some value and produces some value.",
+    answer1: "A well defined computational procedure that takes an input and produces an output.",
     answer2: "A sequence of computational steps that transform the input into the output.",
-    answer3: "Collection of nodes, which together represents a sequence, where each node contains data and a reference to the next node in the sequence."
+    answer3: "Collection of nodes, where each node points to the next node in the sequence."
   }, {
     question: "What is not part of a complete description of an algorithm?",
     answer1: "The algorithm",
@@ -33,6 +33,11 @@ let state = {
   current_question: 0,
   questions_correct: 0
 
+}
+
+function resetState(state) {
+  state.current_question = 0;
+  state.questions_correct = 0;
 }
 
 function shuffle(array) {
@@ -88,8 +93,15 @@ function updateScore(state, elt) {
   $(elt).parent().find('.number-wrong').html(`${state.current_question + 1 - state.questions_correct} ✖`);
 }
 
+function showResults(state) {
+  $('main').html(`<h1>Results</h1>
+    <h2>You got ${state.questions_correct} out of 5 questions correct.</h2>
+    <button class='js-start-button'>Restart</button>`)
+}
+
 function doAllTheThings() {
-  $('.js-start-button').click(function(event) {
+  $('main').on('click', '.js-start-button', function(event) {
+    resetState(state);
     event.preventDefault();
     hideStartScreen();
     renderQuestion(state, 0);
@@ -103,12 +115,18 @@ function doAllTheThings() {
       }
       updateScore(state, clicked);
       if (state.current_question < state.questions.length-1){
+        $(clicked).parent().find('h1').fadeOut(4200)
         window.setTimeout(function() {
           $(clicked).parent().removeClass('answered');
           renderQuestion(state, ++state.current_question);
-        }, 1000);
+        }, 4000);
       } else {
-        console.log("DONE")
+        //console.log("DONE")
+        $(clicked).parent().find('h1').fadeOut(4200)
+        window.setTimeout(function() {
+          $(clicked).parent().removeClass('answered');
+          showResults(state);
+        }, 5000);
       }
     }
   })

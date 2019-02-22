@@ -32,6 +32,25 @@ let state = { questions : [
 
 }
 
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
 function hideStartScreen() {
   $('.start-screen').addClass('hidden');
 };
@@ -39,25 +58,20 @@ function hideStartScreen() {
 function renderQuestion(state, index_question) {
   index = index_question;
   question = state.questions[index].question;
-  correct = state.questions[index].correct;
-  wrong_answers = [state.questions[index].answer1, state.questions[index].answer2, state.questions[index].answer3];
 
-  let answers = ['', '', '', '']
-  answers[Math.floor(Math.random() * 4)] = state.questions[index].correct;
-  let j = 0;
-  for (let i = 0; i<4; i++){
-    if (answers[i] == ''){
-      answers[i] = wrong_answers[j];
-      j++;
-    }
-  }
-
+  let answers = [state.questions[index].correct, state.questions[index].answer1, state.questions[index].answer2, state.questions[index].answer3]
+  answer_template = [`<button class='answer correct'>${answers[0]}</button>`,
+  `<button class='answer'>${answers[1]}</button>`,
+  `<button class='answer'>${answers[2]}</button>`,
+  `<button class='answer'>${answers[3]}</button>`];
+  answer_template = shuffle(answer_template);
   let template = `<h1>Question ${index}</h1>
   <h2>${question}</h2>
-  <button class='correct'>${answers[0]}</button>
-  <button>${answers[1]}</button>
-  <button>${answers[2]}</button>
-  <button>${answers[3]}</button>`;
+  ${answer_template[0]}
+  ${answer_template[1]}
+  ${answer_template[2]}
+  ${answer_template[3]}
+  `;
 
   $('main').html(template);
 };
@@ -66,7 +80,11 @@ function doAllTheThings() {
   $('.js-start-button').click(function(event) {
     event.preventDefault();
     hideStartScreen();
+    state.current_question++;
     renderQuestion(state, 1);
+  })
+  $('main').on('click', '.answer', function(event) {
+    $(this).parent().addClass('answered');
   })
 };
 

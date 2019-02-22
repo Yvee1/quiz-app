@@ -53,6 +53,17 @@ button {
   border: solid lightgrey 1px;
   border-radius: 5px;
 }
+
+.answered .correct {
+  background-color: lightgreen;
+}
+
+.answered button{
+  background-color: tomato;
+}
+
+
+
 .centered-wrapper {
     position: relative;
     text-align: center;

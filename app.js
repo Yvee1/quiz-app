@@ -126,7 +126,7 @@ function doAllTheThings() {
         window.setTimeout(function() {
           $(clicked).parent().removeClass('answered');
           showResults(state);
-        }, 5000);
+        }, 4000);
       }
     }
   })
